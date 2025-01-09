@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Required Permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        android:hardwareAccelerated="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+
+
+
+        </activity>
+
+        <activity android:name=".SettingsActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.SEND" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="text/plain" />
+        </intent-filter>
+
+        <!-- You can also define an intent filter here if needed -->
+        </activity>
+
+        <activity android:name=".ForgotPasswordActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- You can define an Intent filter if needed -->
+        </activity>
+
+        <!-- Sign Up Activity -->
+        <activity android:name=".SignUpActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- You can define an Intent filter if needed -->
+        </activity>
+
+        <activity android:name=".CinematicActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- CinematicActivity configuration -->
+        </activity>
+        <!-- Home Activity -->
+        <activity android:name=".HomeActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- You can define an Intent filter if needed -->
+        </activity>
+
+        <activity android:name=".ForgotPasswordMessage"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- You can define an Intent filter if needed -->
+        </activity>
+
+        <activity android:name=".AlbumActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- You can define an Intent filter if needed -->
+        </activity>
+
+        <activity android:name=".NewNoteActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- You can define an Intent filter if needed -->
+        </activity>
+
+        <activity android:name=".ChatActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+            <!-- You can define an Intent filter if needed -->
+        </activity>
+
+        <activity android:name=".AdviceActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+
+
+        </activity>
+
+        <activity android:name=".DrawingActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+        </activity>
+
+
+
+
+
+
+
+    </application>
+
+
+
+</manifest>
