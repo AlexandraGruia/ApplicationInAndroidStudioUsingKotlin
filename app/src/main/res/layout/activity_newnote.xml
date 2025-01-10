@@ -21,7 +21,6 @@
             android:contentDescription="Settings Icon"
             app:tint="@color/white" />
 
-        <!-- Date Title -->
         <TextView
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
@@ -73,7 +72,6 @@
        </LinearLayout>
 
 
-        <!-- ImageView to show the drawing -->
         <ImageView
             android:id="@+id/savedDrawingImageView"
             android:layout_width="match_parent"
@@ -81,7 +79,6 @@
             android:layout_alignParentTop="true"
             android:visibility="gone" />
 
-        <!-- EditText pentru text și imagini -->
         <EditText
             android:id="@+id/postInput"
             android:layout_width="match_parent"
@@ -98,7 +95,6 @@
             android:padding="10dp" />
 
 
-        <!-- "Is that all?" Message -->
         <TextView
             android:id="@+id/questionText"
             android:layout_width="wrap_content"
@@ -110,7 +106,6 @@
             android:textSize="16sp"
             android:textColor="#666" />
 
-        <!-- Adjust submit button -->
         <Button
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
@@ -126,7 +121,6 @@
             android:paddingEnd="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp" />
-
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"

@@ -15,7 +15,6 @@
         tools:layout_editor_absoluteY="16dp"
         tools:ignore="TouchTargetSize" >
 
-        <!-- Iconul pentru setări -->
         <ImageView
             android:id="@+id/settingsIcon"
             android:layout_width="24dp"
@@ -29,7 +28,6 @@
             tools:ignore="TouchTargetSize" />
 
 
-        <!-- Titlul "Discussions" -->
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
@@ -42,7 +40,6 @@
             android:textStyle="bold"
             tools:ignore="TouchTargetSize" />
 
-        <!-- Iconul pentru meniu (cele trei linii) -->
         <ImageView
             android:id="@+id/menuIcon"
             android:layout_width="24dp"
@@ -54,9 +51,6 @@
             android:src="@drawable/ic_menu"
             app:tint="@color/white"
             tools:ignore="TouchTargetSize" />
-
-
-        <!-- RecyclerView pentru lista de topicuri -->
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -86,9 +80,6 @@
             android:padding="8dp"
             tools:ignore="TouchTargetSize" >
 
-            <!-- Textul "Want to start a new topic?" -->
-
-            <!-- Butonul "+" pentru crearea unui topic nou -->
             <TextView
                 android:id="@+id/startNewTopicText"
                 android:layout_width="wrap_content"

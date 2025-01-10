@@ -6,7 +6,6 @@
     android:background="@drawable/b">
 
 
-    <!-- Settings Icon -->
     <ImageView
         android:id="@+id/settingsIcon"
         android:layout_width="24dp"
@@ -18,7 +17,6 @@
         android:contentDescription="Settings Icon"
         app:tint="@color/white" />
 
-    <!-- Greeting Text -->
     <TextView
         android:id="@+id/greetingText"
         android:layout_width="wrap_content"
@@ -31,7 +29,6 @@
         android:textAlignment="center"
         android:fontFamily="cursive" />
 
-    <!-- Password Input Field -->
     <EditText
         android:id="@+id/passwordInput"
         android:layout_width="250dp"
@@ -47,7 +44,6 @@
         android:imeOptions="actionDone" />
 
 
-    <!-- Forgot Password & Sign Up Links -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
