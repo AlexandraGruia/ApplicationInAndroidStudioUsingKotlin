@@ -3,11 +3,22 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class ChatActivity: ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,7 +51,7 @@ class ChatActivity: ComponentActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.bottom_album-> {
+                R.id.bottom_album -> {
                     startActivity(
                         Intent(
                             applicationContext,
@@ -65,6 +76,13 @@ class ChatActivity: ComponentActivity() {
             }
             false
         }
-    }
+        // Configurare buton "+"
+        val fabCreateTopic = findViewById<ImageButton>(R.id.fab_create_topic)
+        fabCreateTopic.setOnClickListener {
+            // Navigare la activitatea pentru crearea unui topic nou
+            val intent = Intent(this, CreateTopicActivity::class.java)
+            startActivity(intent)
+        }
 
+    }
 }
