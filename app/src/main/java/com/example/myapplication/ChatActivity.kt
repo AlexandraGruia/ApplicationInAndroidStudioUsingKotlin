@@ -76,10 +76,10 @@ class ChatActivity: ComponentActivity() {
             }
             false
         }
-        // Configurare buton "+"
+
         val fabCreateTopic = findViewById<ImageButton>(R.id.fab_create_topic)
         fabCreateTopic.setOnClickListener {
-            // Navigare la activitatea pentru crearea unui topic nou
+
             val intent = Intent(this, CreateTopicActivity::class.java)
             startActivity(intent)
         }

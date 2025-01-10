@@ -22,7 +22,6 @@ class SignUpActivity : ComponentActivity() {
         val dateOfBirthInput: EditText = findViewById(R.id.dateofbirthInput) // Assuming DOB is an additional field
         val signUpButton: Button = findViewById(R.id.signUpButton)
 
-        // Handle Sign Up Button click
         signUpButton.setOnClickListener {
             val name = nameInput.text.toString().trim()
             val email = emailInput.text.toString().trim()

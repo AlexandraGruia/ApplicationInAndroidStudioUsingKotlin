@@ -15,20 +15,16 @@ class DrawingActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawing)
 
-        // Find DrawingView instance
         val drawingView = findViewById<DrawingView>(R.id.drawingView)
 
-
-        // Find and set up the clear button to clear the drawing
         val clearButton = findViewById<Button>(R.id.clearButton)
         clearButton.setOnClickListener {
-            drawingView.clearCanvas()  // Clear the canvas when button is clicked
+            drawingView.clearCanvas()
         }
 
-        // Find and set up the color button to change the drawing color
         val colorButton = findViewById<Button>(R.id.colorButton)
         colorButton.setOnClickListener {
-            drawingView.setColor(Color.RED)  // Change the drawing color to red
+            drawingView.setColor(Color.BLACK)
         }
 
         clearButton.setOnClickListener {
@@ -37,17 +33,14 @@ class DrawingActivity : ComponentActivity() {
         }
 
         colorButton.setOnClickListener {
-            // Inflate the custom color picker layout
             val dialogView = layoutInflater.inflate(R.layout.color_picker_dialog, null)
 
-            // Build the dialog
             val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Pick a Color")
                 .setView(dialogView)
                 .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
                 .create()
 
-            // Set up color button listeners
             dialogView.findViewById<Button>(R.id.colorRed).setOnClickListener {
                 drawingView.setColor(Color.RED)
                 dialog.dismiss()
@@ -75,22 +68,19 @@ class DrawingActivity : ComponentActivity() {
                 dialog.dismiss()
             }
 
-            // Show the dialog
             dialog.show()
         }
 
-        // In DrawingActivity, after the drawing is done:
-        val saveButton = findViewById<Button>(R.id.saveButton)  // Assuming you have a save button
+        val saveButton = findViewById<Button>(R.id.saveButton)
         saveButton.setOnClickListener {
-            // Get the drawing bitmap
-            val drawingBitmap = drawingView.getDrawingBitmap()  // This is your drawing view's bitmap
+            val drawingBitmap = drawingView.getDrawingBitmap()
 
 
             val resultIntent = Intent(this, NewNoteActivity::class.java)
-            resultIntent.putExtra("drawingBitmap", drawingBitmap)  // Pass the bitmap to NewNoteActivity
+            resultIntent.putExtra("drawingBitmap", drawingBitmap)
 
-            startActivity(resultIntent)  // Start NewNoteActivity with the bitmap
-            finish()  // Close the DrawingActivity
+            startActivity(resultIntent)
+            finish()
         }
 
 

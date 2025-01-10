@@ -25,7 +25,6 @@ class ForgotPasswordActivity : ComponentActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                // Show error if any field is missing
                 Toast.makeText(this, "Please type a valid email.", Toast.LENGTH_SHORT).show()
             }
         }

@@ -41,7 +41,6 @@ class NewNoteActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_newnote)
 
-        // Display today's date
         val dateTextView = findViewById<TextView>(R.id.dateText)
         val currentDate = LocalDate.now()
         val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("EEEE, MMMM dd"))
@@ -101,19 +100,16 @@ class NewNoteActivity : ComponentActivity() {
             false
         }
 
-        // Add/Take Photo Button
         val photoButton = findViewById<ImageButton>(R.id.photoButton)
         photoButton.setOnClickListener {
             showPhotoOptions()
         }
 
-        // Stickers Button
         val stickersButton = findViewById<ImageButton>(R.id.stickersButton)
         stickersButton.setOnClickListener {
             Toast.makeText(this, "Stickers feature coming soon!", Toast.LENGTH_SHORT).show()
         }
 
-        // Drawing Button
         val drawButton = findViewById<ImageButton>(R.id.drawButton)
         drawButton.setOnClickListener {
             val intent = Intent(this, DrawingActivity::class.java)
@@ -122,7 +118,6 @@ class NewNoteActivity : ComponentActivity() {
 
 
 
-        // Handle post submission
         val postInput = findViewById<EditText>(R.id.postInput)
         val submitButton = findViewById<Button>(R.id.submitButton)
         submitButton.setOnClickListener {
@@ -180,9 +175,6 @@ class NewNoteActivity : ComponentActivity() {
             }
         }
 
-
-
-                // Get the saved drawing bitmap from the Intent
                 val savedDrawingImageView = findViewById<ImageView>(R.id.savedDrawingImageView)
                 val drawingBitmap = intent.getParcelableExtra<Bitmap>("drawingBitmap")
 
@@ -195,7 +187,6 @@ class NewNoteActivity : ComponentActivity() {
                 submitButton.setOnClickListener {
                     val postText = postInput.text.toString()
                     if (postText.isNotBlank()) {
-                        // Handle post submission (clear the text after posting, etc.)
                         postInput.text.clear()
                     } else {
                         Toast.makeText(this, "Post cannot be empty!", Toast.LENGTH_SHORT).show()
@@ -208,13 +199,11 @@ class NewNoteActivity : ComponentActivity() {
         val spannable = SpannableStringBuilder(editText.text)
         val start = editText.selectionStart
 
-        // Creează un ImageSpan
         val imageSpan = ImageSpan(this, bitmap)
         spannable.setSpan(imageSpan, start, start + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        // Actualizează textul cu imaginea în EditText
         editText.text = spannable
-        editText.setSelection(start + 1) // Cursorul după imagine
+        editText.setSelection(start + 1)
     }
 }
 

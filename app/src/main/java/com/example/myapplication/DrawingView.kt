@@ -12,26 +12,22 @@ import android.view.View
 
 class DrawingView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
-    private val paths = mutableListOf<Pair<Path, Paint>>()  // Store paths with their paints
+    private val paths = mutableListOf<Pair<Path, Paint>>()
     private var currentPath: Path = Path()
-    private var currentPaint: Paint = createPaint(Color.BLACK)  // Default paint is black
+    private var currentPaint: Paint = createPaint(Color.BLACK)
 
-    // Bitmap to hold the background content
     private val bitmap: Bitmap = Bitmap.createBitmap(800, 1280, Bitmap.Config.ARGB_8888)
     private val canvas: Canvas = Canvas(bitmap)
 
     init {
-        // Initialize the first path and paint
         paths.add(Pair(currentPath, currentPaint))
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // Draw the bitmap
         canvas.drawBitmap(bitmap, 0f, 0f, null)
 
-        // Draw all saved paths with their respective paints
         for ((path, paint) in paths) {
             canvas.drawPath(path, paint)
         }
@@ -43,39 +39,36 @@ class DrawingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentPath = Path()  // Create a new path for each stroke
+                currentPath = Path()
                 currentPath.moveTo(x, y)
-                paths.add(Pair(currentPath, currentPaint))  // Add the new path with the current paint
+                paths.add(Pair(currentPath, currentPaint))
                 invalidate()
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-                currentPath.lineTo(x, y)  // Add lines to the current path
+                currentPath.lineTo(x, y)
             }
             MotionEvent.ACTION_UP -> {
-                canvas.drawPath(currentPath, currentPaint)  // Draw the path on the bitmap
+                canvas.drawPath(currentPath, currentPaint)
             }
         }
 
-        invalidate()  // Request a redraw
+        invalidate()
         return true
     }
 
-    // Change the color for new paths
     fun setColor(color: Int) {
         currentPaint = createPaint(color)
     }
 
-    // Clear the canvas
     fun clearCanvas() {
-        paths.clear()  // Clear all paths
+        paths.clear()
         currentPath = Path()
         currentPaint = createPaint(Color.BLACK)
-        bitmap.eraseColor(Color.TRANSPARENT)  // Clear the bitmap
-        invalidate()  // Request a redraw
+        bitmap.eraseColor(Color.TRANSPARENT)
+        invalidate()
     }
 
-    // Helper function to create a new Paint object
     private fun createPaint(color: Int): Paint {
         return Paint().apply {
             this.color = color
@@ -87,11 +80,10 @@ class DrawingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
         }
     }
 
-    // Now get the bitmap of the drawing
     fun getDrawingBitmap(): Bitmap {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        draw(canvas)  // Draw the view's content onto the canvas
+        draw(canvas)
         return bitmap
     }
 }

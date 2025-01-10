@@ -21,8 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-        // Reference to views
+        
         val passwordInput: EditText = findViewById(R.id.passwordInput)
         val forgotPassword: TextView = findViewById(R.id.forgotPassword)
         val signupText: TextView = findViewById(R.id.signupText)
@@ -30,46 +29,36 @@ class MainActivity : ComponentActivity() {
 
         passwordInput.requestFocus()
 
-        // Listen for the Enter key press (IME_ACTION_DONE or KeyEvent.KEYCODE_ENTER)
         passwordInput.setOnEditorActionListener { textView, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
                 val password = passwordInput.text.toString()
 
                 if (password.isNotEmpty()) {
-                    // Navigate to the next activity (e.g., HomeActivity)
                     val intent = Intent(this, CinematicActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    // You can add a message or logic here to show an error if the password is empty
                     passwordInput.error = "Please enter a password"
                 }
-                true // Returning true indicates the action is handled
+                true
             } else {
                 false
             }
         }
-        // Handle clicks
+
         forgotPassword.setOnClickListener {
-            // Add your logic for "Forgot password?"
-            // Navigate to ForgotPasswordActivity
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 
         signupText.setOnClickListener {
-            // Add your logic for "Don’t have an account?"
-            // Navigate to SignUpActivity
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
-        // Set a click listener to navigate to SettingsActivity when clicked
         settingsIcon.setOnClickListener {
-            // Create an Intent to navigate to the SettingsActivity
             val intent = Intent(this, SettingsActivity::class.java)
 
-            // Start the activity
             startActivity(intent)
         }
     }

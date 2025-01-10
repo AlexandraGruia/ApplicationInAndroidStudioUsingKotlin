@@ -78,30 +78,24 @@ class AlbumActivity: ComponentActivity() {
 
         val photoGrid = findViewById<GridLayout>(R.id.photoGrid)
 
-        // Retrieve the saved photo metadata (file paths and dates) from SharedPreferences
         val sharedPreferences = getSharedPreferences("AlbumPreferences", Context.MODE_PRIVATE)
         val photosData = sharedPreferences.getString("photosList", null)
 
         if (photosData != null) {
-            // Split the stored data into individual entries
             val photosList = photosData.split(";")
 
-            // Loop through the stored photos and display them
             for (photoEntry in photosList) {
                 val parts = photoEntry.split("|")
                 if (parts.size == 2) {
                     val filePath = parts[0]
                     val date = parts[1]
 
-                    // Load the photo from the file path
                     val photoFile = File(filePath)
                     if (photoFile.exists()) {
                         val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
 
-                        // Create a frame layout to hold the image and date
                         val frameLayout = FrameLayout(this)
 
-                        // Create ImageView for the photo
                         val imageView = ImageView(this)
                         imageView.layoutParams = GridLayout.LayoutParams().apply {
                             width = 300  // Set width of image
@@ -111,21 +105,18 @@ class AlbumActivity: ComponentActivity() {
                         imageView.setImageBitmap(bitmap) // Set the photo bitmap
                         frameLayout.addView(imageView)
 
-                        // Create TextView for the date
                         val dateTextView = TextView(this)
                         dateTextView.text = date
                         dateTextView.setTextColor(resources.getColor(android.R.color.white))
                         dateTextView.setTextSize(12f)  // Adjust font size
-                        dateTextView.setBackgroundColor(resources.getColor(android.R.color.black))  // Background for date
-                        dateTextView.setPadding(8, 4, 8, 4)  // Padding around date text
+                        dateTextView.setBackgroundColor(resources.getColor(android.R.color.black))
+                        dateTextView.setPadding(8, 4, 8, 4)
 
-                        // Position the date at the bottom-right corner
                         val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                         params.gravity = Gravity.BOTTOM or Gravity.END
                         dateTextView.layoutParams = params
                         frameLayout.addView(dateTextView)
 
-                        // Add the frame layout to the photo grid
                         photoGrid.addView(frameLayout)
                     }
                 }
