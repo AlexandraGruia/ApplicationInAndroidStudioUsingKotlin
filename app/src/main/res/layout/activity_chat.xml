@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,14 +5,14 @@
     android:layout_height="match_parent"
     android:background="#f5a3a3"
     tools:context=".ChatActivity"
-    tools:ignore="TouchTargetSize" >
+    tools:ignore="TouchTargetSize">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="16dp"
-        tools:ignore="TouchTargetSize" >
+        tools:ignore="TouchTargetSize">
 
         <ImageView
             android:id="@+id/settingsIcon"
@@ -24,8 +23,8 @@
             android:layout_margin="16dp"
             android:contentDescription="Settings Icon"
             android:src="@drawable/icon_setting"
-            app:tint="@color/white"
             tools:ignore="TouchTargetSize" />
+
 
 
         <TextView
@@ -40,6 +39,7 @@
             android:textStyle="bold"
             tools:ignore="TouchTargetSize" />
 
+
         <ImageView
             android:id="@+id/menuIcon"
             android:layout_width="24dp"
@@ -52,17 +52,94 @@
             app:tint="@color/white"
             tools:ignore="TouchTargetSize" />
 
+        <LinearLayout
+            android:id="@+id/categoriesMenu"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menuIcon"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_corner_background"
+            android:visibility="gone"
+            android:elevation="8dp"
+            tools:ignore="TouchTargetSize">
+
+            <TextView
+                android:id="@+id/categoryC1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Category C1"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/categoryC2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Category C2"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/categoryC3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Category C3"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/categoryC4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Category C4"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/mostRecent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Most Recent"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/mostPopular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Most Popular"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="?attr/selectableItemBackground" />
+        </LinearLayout>
+
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/bottomNavigation"
-            android:layout_below="@id/titleTextView"
+            android:layout_height="0dp"
             android:layout_margin="16dp"
-            android:layout_marginTop="34dp"
-            android:layout_marginBottom="-2dp"
-            tools:listitem="@layout/background_ic"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="16dp"
+            android:layout_above="@id/startNewTopicLayout"
+            android:layout_below="@id/titleTextView"
+            tools:listitem="@layout/item_topic"
             tools:ignore="TouchTargetSize" />
 
         <RelativeLayout
@@ -78,7 +155,7 @@
             android:layout_marginBottom="54dp"
             android:background="@drawable/background_bottomm"
             android:padding="8dp"
-            tools:ignore="TouchTargetSize" >
+            tools:ignore="TouchTargetSize">
 
             <TextView
                 android:id="@+id/startNewTopicText"
@@ -106,6 +183,7 @@
 
         </RelativeLayout>
 
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
@@ -119,9 +197,7 @@
             app:itemIconTint="@drawable/item_selector"
             app:itemRippleColor="@android:color/transparent"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/buttonnavmenu">
-
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
+            app:menu="@menu/buttonnavmenu" />
 
     </RelativeLayout>
 

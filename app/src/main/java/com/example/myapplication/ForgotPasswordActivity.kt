@@ -11,7 +11,6 @@ import androidx.activity.enableEdgeToEdge
 class ForgotPasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_forgotpassword)
 
         val emailInput: EditText = findViewById(R.id.emailInput)

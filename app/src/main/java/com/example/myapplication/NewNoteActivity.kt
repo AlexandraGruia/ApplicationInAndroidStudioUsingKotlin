@@ -38,7 +38,6 @@ class NewNoteActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_newnote)
 
         val dateTextView = findViewById<TextView>(R.id.dateText)

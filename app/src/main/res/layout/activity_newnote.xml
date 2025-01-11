@@ -9,7 +9,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="TouchTargetSize">
+
         <ImageView
             android:id="@+id/settingsIcon"
             android:layout_width="24dp"
@@ -18,8 +22,7 @@
             android:src="@drawable/icon_setting"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:contentDescription="Settings Icon"
-            app:tint="@color/white" />
+            android:contentDescription="Settings Icon" />
 
         <TextView
             android:id="@+id/dateText"

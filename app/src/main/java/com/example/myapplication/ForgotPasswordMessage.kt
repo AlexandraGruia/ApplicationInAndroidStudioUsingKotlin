@@ -10,7 +10,6 @@ import androidx.activity.enableEdgeToEdge
 class ForgotPasswordMessage: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_forgotpasswordmessage)
 
         val understandButton: Button = findViewById(R.id.understandButton)

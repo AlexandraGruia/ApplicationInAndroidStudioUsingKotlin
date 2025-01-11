@@ -10,7 +10,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class AdviceActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_advice)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)

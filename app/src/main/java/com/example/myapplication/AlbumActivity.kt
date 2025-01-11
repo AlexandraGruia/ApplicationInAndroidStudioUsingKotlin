@@ -20,7 +20,6 @@ import java.io.File
 class AlbumActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_album)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
