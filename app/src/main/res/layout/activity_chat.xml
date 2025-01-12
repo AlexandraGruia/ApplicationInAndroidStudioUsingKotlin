@@ -197,9 +197,9 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="0dp"
             android:background="@drawable/bottom_background"
             android:elevation="15dp"
             android:paddingLeft="10dp"

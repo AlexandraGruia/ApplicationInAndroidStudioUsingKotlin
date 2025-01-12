@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.filament.android)
     implementation(libs.androidx.compose.material.core)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

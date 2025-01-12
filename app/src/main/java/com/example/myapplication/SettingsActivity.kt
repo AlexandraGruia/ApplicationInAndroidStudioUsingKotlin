@@ -16,7 +16,6 @@ class SettingsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
@@ -85,9 +84,10 @@ class SettingsActivity : ComponentActivity() {
 
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@SettingsActivity, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
-
     }
 }
