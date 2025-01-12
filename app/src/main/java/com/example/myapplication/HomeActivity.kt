@@ -72,7 +72,10 @@ class HomeActivity  : ComponentActivity() {
 
 
         if (recentPostText != null && recentPostDate != null) {
+            println("Received post: Text=$recentPostText, Date=$recentPostDate")
             displayPost(recentPostText, recentPostDate, recentPostImageResId)
+        } else {
+            println("No post data received")
         }
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
@@ -136,38 +139,18 @@ class HomeActivity  : ComponentActivity() {
             startActivity(intent)
         }
     }
-
     private fun displayPost(text: String, date: String, imageResId: Int) {
-        val postView = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(16, 16, 16, 16)
-            setBackgroundResource(R.drawable.post_background)
-        }
+        val postsContainer = findViewById<LinearLayout>(R.id.postsContainer)
 
-        val postImage = ImageView(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                500
-            )
-            setImageResource(imageResId)
-            scaleType = ImageView.ScaleType.CENTER_CROP
-        }
+        val postView = layoutInflater.inflate(R.layout.post_item, postsContainer, false)
 
-        val postText = TextView(this).apply {
-            this.text = text
-            textSize = 18f
-            setPadding(8, 8, 8, 8)
-        }
+        val postTextView = postView.findViewById<TextView>(R.id.postText)
+        val postDateView = postView.findViewById<TextView>(R.id.postDate)
+        val postImageView = postView.findViewById<ImageView>(R.id.postImage)
 
-        val postDate = TextView(this).apply {
-            this.text = date
-            textSize = 14f
-            setPadding(8, 8, 8, 8)
-        }
-
-        postView.addView(postImage)
-        postView.addView(postText)
-        postView.addView(postDate)
+        postTextView.text = text
+        postDateView.text = date
+        postImageView.setImageResource(imageResId)
 
         postsContainer.addView(postView)
     }

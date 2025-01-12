@@ -124,12 +124,10 @@ class NewNoteActivity : ComponentActivity() {
         }
 
 
-        // Photo options button
         findViewById<ImageButton>(R.id.photoButton).setOnClickListener {
             showPhotoOptions()
         }
 
-        // Submit post
         val postInput = findViewById<EditText>(R.id.postInput)
         findViewById<Button>(R.id.submitButton).setOnClickListener {
             val postText = postInput.text.toString()
@@ -137,6 +135,7 @@ class NewNoteActivity : ComponentActivity() {
                 val intent = Intent(this, HomeActivity::class.java).apply {
                     putExtra("postText", postText)
                     putExtra("postDate", currentDate)
+                    putExtra("postImage", R.drawable.default_image)
                 }
                 startActivity(intent)
                 finish()
@@ -243,12 +242,11 @@ class NewNoteActivity : ComponentActivity() {
         val start = editText.selectionStart
         val imageSpan = ImageSpan(this, bitmap)
 
-        // Adaugă imaginea ca ImageSpan în poziția cursorului
         spannable.setSpan(imageSpan, start, start + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.insert(start + 1, "\n\n") // Adaugă spațiu pentru text ulterior
+        spannable.insert(start + 1, "\n\n")
 
         editText.text = spannable
-        editText.setSelection(start + 2) // Mută cursorul după imagine
+        editText.setSelection(start + 2)
     }
 
 }
