@@ -1,9 +1,12 @@
 package com.example.myapplication
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -22,6 +25,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -129,7 +133,13 @@ class NewNoteActivity : ComponentActivity() {
         submitButton.setOnClickListener {
             val postText = postInput.text.toString()
             if (postText.isNotBlank()) {
-                postInput.text.clear()
+                val intent = Intent(this, HomeActivity::class.java).apply {
+                    putExtra("postText", postText)
+                    putExtra("postDate", currentDate)
+                    putExtra("postImage", R.drawable.default_image)
+                }
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "Post cannot be empty!", Toast.LENGTH_SHORT).show()
             }
@@ -161,7 +171,31 @@ class NewNoteActivity : ComponentActivity() {
                 startActivityForResult(intent, REQUEST_CAMERA)
             }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    private fun handleGalleryImage(uri: Uri?): Bitmap? {
+        return try {
+            uri?.let {
+                val inputStream = contentResolver.openInputStream(it)
+                BitmapFactory.decodeStream(inputStream)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+        val width = bitmap.width
+        val height = bitmap.height
+
+        val scale = Math.min(maxWidth.toFloat() / width, maxHeight.toFloat() / height)
+        val newWidth = (width * scale).toInt()
+        val newHeight = (height * scale).toInt()
+
+        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val postInput = findViewById<EditText>(R.id.postInput)
 
@@ -169,47 +203,60 @@ class NewNoteActivity : ComponentActivity() {
             when (requestCode) {
                 REQUEST_GALLERY -> {
                     val selectedImageUri = data?.data
-                    selectedImageUri?.let {
-                        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
-                        insertImageInEditText(postInput, bitmap)
+                    val bitmap = handleGalleryImage(selectedImageUri)
+                    bitmap?.let {
+                        val resizedBitmap = resizeBitmap(it, 800, 800)
+                        val compressedBitmap = compressBitmap(resizedBitmap)
+                        insertImageInEditText(postInput, compressedBitmap)
                     }
                 }
                 REQUEST_CAMERA -> {
-                    val photo = data?.extras?.get("data") as Bitmap
-                    insertImageInEditText(postInput, photo)
+                    val photo = data?.extras?.get("data") as? Bitmap
+                    photo?.let {
+                        val resizedBitmap = resizeBitmap(it, 800, 800)
+                        val compressedBitmap = compressBitmap(resizedBitmap)
+                        insertImageInEditText(postInput, compressedBitmap)
+                    }
                 }
-            }
-        }
+                102 -> {
+                    val byteArray = data?.getByteArrayExtra("drawingBitmap")
+                    if (byteArray != null) {
+                        val drawingBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                        insertImageInEditText(postInput, drawingBitmap)
 
-                val savedDrawingImageView = findViewById<ImageView>(R.id.savedDrawingImageView)
-                val drawingBitmap = intent.getParcelableExtra<Bitmap>("drawingBitmap")
-
-                if (drawingBitmap != null) {
-                    savedDrawingImageView.setImageBitmap(drawingBitmap)
-                    savedDrawingImageView.visibility = View.VISIBLE // Show the drawing
-                }
-
-                val submitButton = findViewById<Button>(R.id.submitButton)
-                submitButton.setOnClickListener {
-                    val postText = postInput.text.toString()
-                    if (postText.isNotBlank()) {
-                        postInput.text.clear()
-                    } else {
-                        Toast.makeText(this, "Post cannot be empty!", Toast.LENGTH_SHORT).show()
+                        val savedDrawingImageView = findViewById<ImageView>(R.id.savedDrawingImageView)
+                        savedDrawingImageView.setImageBitmap(drawingBitmap)
+                        savedDrawingImageView.visibility = View.VISIBLE
                     }
                 }
             }
+        } else {
+            Toast.makeText(this, "Image selection failed!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun compressBitmap(bitmap: Bitmap, quality: Int = 80): Bitmap {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
+        val byteArray = stream.toByteArray()
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
 
 
     private fun insertImageInEditText(editText: EditText, bitmap: Bitmap) {
         val spannable = SpannableStringBuilder(editText.text)
         val start = editText.selectionStart
-
         val imageSpan = ImageSpan(this, bitmap)
+
         spannable.setSpan(imageSpan, start, start + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
+        spannable.insert(start + 1, "\n\n")
+
         editText.text = spannable
-        editText.setSelection(start + 1)
+
+        editText.setSelection(start + 3)
     }
+
+
 }
 

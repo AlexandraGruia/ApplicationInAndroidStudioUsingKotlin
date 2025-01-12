@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -18,16 +19,23 @@ class HomeActivity  : ComponentActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var postsContainer: LinearLayout
+    private lateinit var morePostsContainer: LinearLayout
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         postsContainer = findViewById(R.id.postsContainer)
+        morePostsContainer = findViewById(R.id.morePostsContainer)
 
-        val postText = intent.getStringExtra("postText")
-        postText?.let {
-            displayPost(it)
+        val recentPostText = intent.getStringExtra("postText")
+        val recentPostDate = intent.getStringExtra("postDate")
+        val recentPostImageResId = intent.getIntExtra("postImage", R.drawable.default_image)
+
+
+        if (recentPostText != null && recentPostDate != null) {
+            displayPost(recentPostText, recentPostDate, recentPostImageResId)
         }
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
@@ -92,11 +100,38 @@ class HomeActivity  : ComponentActivity() {
         }
     }
 
-    private fun displayPost(text: String) {
-        val postView = TextView(this)
-        postView.text = text
-        postView.textSize = 18f
-        postView.setPadding(8, 8, 8, 8)
+    private fun displayPost(text: String, date: String, imageResId: Int) {
+        val postView = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(16, 16, 16, 16)
+            setBackgroundResource(R.drawable.post_background)
+        }
+
+        val postImage = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                500
+            )
+            setImageResource(imageResId)
+            scaleType = ImageView.ScaleType.CENTER_CROP
+        }
+
+        val postText = TextView(this).apply {
+            this.text = text
+            textSize = 18f
+            setPadding(8, 8, 8, 8)
+        }
+
+        val postDate = TextView(this).apply {
+            this.text = date
+            textSize = 14f
+            setPadding(8, 8, 8, 8)
+        }
+
+        postView.addView(postImage)
+        postView.addView(postText)
+        postView.addView(postDate)
+
         postsContainer.addView(postView)
     }
 }

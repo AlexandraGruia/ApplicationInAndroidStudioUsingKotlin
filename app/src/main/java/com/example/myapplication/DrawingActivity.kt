@@ -2,11 +2,13 @@ package com.example.myapplication
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.activity.ComponentActivity
+import java.io.ByteArrayOutputStream
 
 
 class DrawingActivity : ComponentActivity() {
@@ -75,14 +77,17 @@ class DrawingActivity : ComponentActivity() {
         saveButton.setOnClickListener {
             val drawingBitmap = drawingView.getDrawingBitmap()
 
+            val stream = ByteArrayOutputStream()
+            drawingBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val byteArray = stream.toByteArray()
 
-            val resultIntent = Intent(this, NewNoteActivity::class.java)
-            resultIntent.putExtra("drawingBitmap", drawingBitmap)
+            val resultIntent = Intent().apply {
+                putExtra("drawingBitmap", byteArray)
+            }
 
-            startActivity(resultIntent)
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
-
 
     }
 }

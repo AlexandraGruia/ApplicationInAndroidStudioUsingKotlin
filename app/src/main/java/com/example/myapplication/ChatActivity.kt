@@ -167,7 +167,7 @@ class ChatActivity: ComponentActivity() {
         super.onResume()
 
         val newTopicList = loadTopics()
-        if (newTopicList != topicList) { // Compară lista nouă cu cea existentă
+        if (newTopicList != topicList) {
             topicList.clear()
             topicList.addAll(newTopicList)
             topicAdapter.notifyDataSetChanged()
@@ -193,17 +193,25 @@ class ChatActivity: ComponentActivity() {
     }
 
     private fun filterTopicsByCategory(category: String) {
-        val filteredList = if (category == "Most Recent") {
-            topicList.sortedByDescending { it.timestamp }
-        } else if (category == "Most Popular") {
-            topicList.sortedByDescending { it.peopleCount }
-        } else {
-            topicList.filter { it.category == category }
+        val filteredTopics = when (category) {
+            "Most Recent" -> topicList.sortedByDescending { it.timestamp }
+            "Most Popular" -> topicList.sortedByDescending { it.peopleCount }
+            else -> topicList.filter { it.category == category }
         }
 
-        if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No topics found for category: $category", Toast.LENGTH_SHORT).show()
+        val emptyView = findViewById<TextView>(R.id.emptyView)
+        if (filteredTopics.isEmpty()) {
+            emptyView.text = "No topics found for category: $category"
+            emptyView.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        } else {
+            emptyView.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
         }
-        topicAdapter.updateList(filteredList)
+
+        topicAdapter.updateList(filteredTopics)
     }
+
+
+
 }
