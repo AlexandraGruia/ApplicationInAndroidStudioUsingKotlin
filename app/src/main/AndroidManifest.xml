@@ -107,6 +107,7 @@
             android:exported="true">
         </activity>
 
+
         <activity android:name=".CreateTopicActivity"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:exported="true">

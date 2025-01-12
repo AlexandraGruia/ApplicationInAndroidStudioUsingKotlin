@@ -21,10 +21,10 @@ class AdviceActivity : ComponentActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNavigationView.selectedItemId = R.id.bottom_chat
+        bottomNavigationView.selectedItemId = R.id.bottom_advice
         bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.bottom_chat -> return@setOnItemSelectedListener true
+                R.id.bottom_advice -> return@setOnItemSelectedListener true
                 R.id.bottom_home -> {
                     startActivity(
                         Intent(
@@ -58,11 +58,11 @@ class AdviceActivity : ComponentActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.bottom_advice -> {
+                R.id.bottom_chat -> {
                     startActivity(
                         Intent(
                             applicationContext,
-                            AdviceActivity::class.java
+                            ChatActivity::class.java
                         )
                     )
                     finish()

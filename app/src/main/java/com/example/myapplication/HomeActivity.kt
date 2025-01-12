@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -20,6 +21,9 @@ class HomeActivity  : ComponentActivity() {
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var postsContainer: LinearLayout
     private lateinit var morePostsContainer: LinearLayout
+    private lateinit var adviceTitle1: TextView
+    private lateinit var adviceTitle2: TextView
+    private lateinit var adviceTitle3: TextView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +32,39 @@ class HomeActivity  : ComponentActivity() {
 
         postsContainer = findViewById(R.id.postsContainer)
         morePostsContainer = findViewById(R.id.morePostsContainer)
+
+        val recentAdvice1 = findViewById<TextView>(R.id.recentAdvice1)
+        val recentAdvice2 = findViewById<TextView>(R.id.recentAdvice2)
+        val recentAdvice3 = findViewById<TextView>(R.id.recentAdvice3)
+
+
+        val sharedPrefs = getSharedPreferences("AdviceApp", Context.MODE_PRIVATE)
+        val allEntries = sharedPrefs.all
+        val adviceList = mutableListOf<Pair<String, String>>() // (id, title)
+
+        for ((key, value) in allEntries) {
+            if (key.endsWith("_title")) {
+                val title = value.toString()
+                val adviceId = key.removeSuffix("_title")
+                adviceList.add(adviceId to title)
+            }
+        }
+
+        adviceList.sortByDescending { it.first }
+
+        if (adviceList.isNotEmpty()) {
+            recentAdvice1.text = adviceList[0].second
+            recentAdvice1.visibility = TextView.VISIBLE
+        }
+        if (adviceList.size > 1) {
+            recentAdvice2.text = adviceList[1].second
+            recentAdvice2.visibility = TextView.VISIBLE
+        }
+        if (adviceList.size > 2) {
+            recentAdvice3.text = adviceList[2].second
+            recentAdvice3.visibility = TextView.VISIBLE
+        }
+
 
         val recentPostText = intent.getStringExtra("postText")
         val recentPostDate = intent.getStringExtra("postDate")

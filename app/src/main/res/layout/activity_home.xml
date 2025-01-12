@@ -64,6 +64,7 @@
                 android:layout_marginBottom="16dp">
 
                 <TextView
+                    android:id="@+id/recentAdvice1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -74,6 +75,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/recentAdvice2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -84,6 +86,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/recentAdvice3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
