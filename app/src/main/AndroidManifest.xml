@@ -117,6 +117,17 @@
             android:exported="true">
         </activity>
 
+        <activity android:name=".AddAdviceActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+        </activity>
+
+        <activity android:name=".AdviceDetailActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:exported="true">
+        </activity>
+
+
 
     </application>
 
