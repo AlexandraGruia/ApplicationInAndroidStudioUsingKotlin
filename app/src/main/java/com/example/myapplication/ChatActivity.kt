@@ -95,19 +95,12 @@ class ChatActivity: ComponentActivity() {
             startActivity(intent)
         }
 
-        recyclerView = findViewById(R.id.recyclerView)
 
+        recyclerView = findViewById(R.id.recyclerView)
         topicList = loadTopics().toMutableList()
         topicAdapter = TopicAdapter(topicList, this) { topic ->
-            if (topic.name.isNotEmpty()) {
-                val intent = Intent(this, TopicActivity::class.java)
-                intent.putExtra("topicId", topic.id)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Topic name is empty", Toast.LENGTH_SHORT).show()
-            }
+            handleJoin(topic)
         }
-
         recyclerView.adapter = topicAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -148,19 +141,12 @@ class ChatActivity: ComponentActivity() {
         }
     }
 
-    private fun loadTopics(): List<Topic> {
-        val sharedPreferences = getSharedPreferences("topics", MODE_PRIVATE)
-        val gson = Gson()
-        val json = sharedPreferences.getString("topicListJson", "[]") ?: "[]"
-        Log.d("ChatActivity", "Loaded topics JSON: $json")
 
-        return try {
-            val type = object : TypeToken<List<Topic>>() {}.type
-            gson.fromJson<List<Topic>>(json, type) ?: emptyList()
-        } catch (e: Exception) {
-            Log.e("ChatActivity", "Failed to load topics: ${e.message}")
-            emptyList()
-        }
+    private fun loadTopics(): List<Topic> {
+        val dbHelper = TopicDatabase(this)
+        val topics = dbHelper.getAllTopics()
+        Log.d("ChatActivity", "Loaded topics: $topics")
+        return topics
     }
 
     override fun onResume() {
@@ -173,30 +159,27 @@ class ChatActivity: ComponentActivity() {
             topicAdapter.notifyDataSetChanged()
         }
     }
-
-
-    private fun handleJoin(topicId: String) {
-        val topicList = loadTopics()
-        val topic = topicList.find { it.id == topicId }
-
-        if (topic != null) {
+    private fun handleJoin(topic: Topic) {
+        if (topic.isJoined) {
+            Toast.makeText(this, "You are already part of this topic!", Toast.LENGTH_SHORT).show()
+        } else {
+            topic.isJoined = true
             Toast.makeText(this, "You joined topic: ${topic.name}", Toast.LENGTH_SHORT).show()
-            Log.d("JoinActivity", "Joined topic: $topic")
 
-            val intent = Intent(this, ChatActivity::class.java)
+
+            val intent = Intent(this, TopicActivity::class.java)
             intent.putExtra("TOPIC_ID", topic.id)
             startActivity(intent)
-        } else {
-            Log.e("JoinActivity", "Topic ID not found")
-            Toast.makeText(this, "Topic not found", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun filterTopicsByCategory(category: String) {
+        val dbHelper = TopicDatabase(this)
+
         val filteredTopics = when (category) {
-            "Most Recent" -> topicList.sortedByDescending { it.timestamp }
-            "Most Popular" -> topicList.sortedByDescending { it.peopleCount }
-            else -> topicList.filter { it.category == category }
+            "Most Recent" -> dbHelper.getAllTopics().sortedByDescending { it.timestamp }
+            "Most Popular" -> dbHelper.getAllTopics().sortedByDescending { it.peopleCount }
+            else -> dbHelper.getTopicsByCategory(category)
         }
 
         val emptyView = findViewById<TextView>(R.id.emptyView)
@@ -211,7 +194,4 @@ class ChatActivity: ComponentActivity() {
 
         topicAdapter.updateList(filteredTopics)
     }
-
-
-
 }
