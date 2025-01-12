@@ -17,13 +17,6 @@ class ForgotPasswordActivity : ComponentActivity() {
         val emailInput: EditText = findViewById(R.id.emailInput)
         val doneButton: Button = findViewById(R.id.doneButton)
 
-        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
-        settingsIcon.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-
-            startActivity(intent)
-        }
-
         doneButton.setOnClickListener {
             val email = emailInput.text.toString().trim()
 

@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
         val passwordInput: EditText = findViewById(R.id.passwordInput)
         val forgotPassword: TextView = findViewById(R.id.forgotPassword)
         val signupText: TextView = findViewById(R.id.signupText)
-        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
 
         passwordInput.requestFocus()
 
@@ -55,11 +54,8 @@ class MainActivity : ComponentActivity() {
             startActivity(intent)
         }
 
-        settingsIcon.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
+          startActivity(intent)
 
-            startActivity(intent)
-        }
     }
 
 }

@@ -22,13 +22,6 @@ class SignUpActivity : ComponentActivity() {
         val dateOfBirthInput: EditText = findViewById(R.id.dateofbirthInput) // Assuming DOB is an additional field
         val signUpButton: Button = findViewById(R.id.signUpButton)
 
-        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
-        settingsIcon.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-
-            startActivity(intent)
-        }
-
         signUpButton.setOnClickListener {
             val name = nameInput.text.toString().trim()
             val email = emailInput.text.toString().trim()
