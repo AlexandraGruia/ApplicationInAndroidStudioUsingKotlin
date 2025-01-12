@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.material)
     implementation(libs.filament.android)
+    implementation(libs.androidx.compose.material.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

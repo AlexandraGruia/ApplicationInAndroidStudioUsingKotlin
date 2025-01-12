@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
@@ -87,15 +88,25 @@ class ChatActivity: ComponentActivity() {
             false
         }
 
-        recyclerView = findViewById(R.id.recyclerView)
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
 
-        // Încărcăm lista de topicuri
-        topicList = loadTopics().toMutableList()
-        topicAdapter = TopicAdapter(topicList) { topic ->
-            Toast.makeText(this, "Joining topic: ${topic.name}", Toast.LENGTH_SHORT).show()
-            // Logica pentru navigare sau alte acțiuni
+            startActivity(intent)
         }
 
+        recyclerView = findViewById(R.id.recyclerView)
+
+        topicList = loadTopics().toMutableList()
+        topicAdapter = TopicAdapter(topicList, this) { topic ->
+            if (topic.name.isNotEmpty()) {
+                val intent = Intent(this, TopicActivity::class.java)
+                intent.putExtra("topicId", topic.id)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Topic name is empty", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         recyclerView.adapter = topicAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -109,32 +120,90 @@ class ChatActivity: ComponentActivity() {
         categoriesMenu = findViewById(R.id.categoriesMenu)
 
         menuIcon.setOnClickListener {
-            categoriesMenu.visibility = if (categoriesMenu.visibility == View.GONE) View.VISIBLE else View.GONE
+            categoriesMenu.visibility =
+                if (categoriesMenu.visibility == View.GONE) View.VISIBLE else View.GONE
+        }
+
+        val categoryC1 = findViewById<TextView>(R.id.categoryC1)
+        val categoryC2 = findViewById<TextView>(R.id.categoryC2)
+        val categoryC3 = findViewById<TextView>(R.id.categoryC3)
+        val categoryC4 = findViewById<TextView>(R.id.categoryC4)
+        val mostRecent = findViewById<TextView>(R.id.mostRecent)
+        val mostPopular = findViewById<TextView>(R.id.mostPopular)
+
+        val categories = listOf(categoryC1, categoryC2, categoryC3, categoryC4, mostRecent, mostPopular)
+
+        categories.forEach { category ->
+            category.setOnClickListener {
+                categories.forEach { cat ->
+                    cat.isSelected = false
+                    cat.setBackgroundResource(R.drawable.default_category_background)
+                }
+
+                it.isSelected = true
+                it.setBackgroundResource(R.drawable.category_selected_background)
+
+                filterTopicsByCategory(category.text.toString())
+            }
         }
     }
 
     private fun loadTopics(): List<Topic> {
         val sharedPreferences = getSharedPreferences("topics", MODE_PRIVATE)
         val gson = Gson()
+        val json = sharedPreferences.getString("topicListJson", "[]") ?: "[]"
+        Log.d("ChatActivity", "Loaded topics JSON: $json")
 
-        // Citim lista de topicuri din SharedPreferences (ca un string JSON)
-        val existingTopicsJson = sharedPreferences.getString("topicListJson", "[]") ?: "[]"
-        val type = object : TypeToken<List<Topic>>() {}.type
-
-        // Deserializăm JSON-ul într-o listă de obiecte Topic
-        return gson.fromJson(existingTopicsJson, type)
+        return try {
+            val type = object : TypeToken<List<Topic>>() {}.type
+            gson.fromJson<List<Topic>>(json, type) ?: emptyList()
+        } catch (e: Exception) {
+            Log.e("ChatActivity", "Failed to load topics: ${e.message}")
+            emptyList()
+        }
     }
-
-
 
     override fun onResume() {
         super.onResume()
 
-        // Reîncarcă topicurile
-        topicList.clear()  // Golește lista curentă
-        topicList.addAll(loadTopics())  // Încarcă topicurile din SharedPreferences
+        val newTopicList = loadTopics()
+        if (newTopicList != topicList) { // Compară lista nouă cu cea existentă
+            topicList.clear()
+            topicList.addAll(newTopicList)
+            topicAdapter.notifyDataSetChanged()
+        }
+    }
 
-        // Notifică adapterul să se actualizeze
-        topicAdapter.notifyDataSetChanged()
+
+    private fun handleJoin(topicId: String) {
+        val topicList = loadTopics()
+        val topic = topicList.find { it.id == topicId }
+
+        if (topic != null) {
+            Toast.makeText(this, "You joined topic: ${topic.name}", Toast.LENGTH_SHORT).show()
+            Log.d("JoinActivity", "Joined topic: $topic")
+
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("TOPIC_ID", topic.id)
+            startActivity(intent)
+        } else {
+            Log.e("JoinActivity", "Topic ID not found")
+            Toast.makeText(this, "Topic not found", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun filterTopicsByCategory(category: String) {
+        val filteredList = if (category == "Most Recent") {
+            topicList.sortedByDescending { it.timestamp }
+        } else if (category == "Most Popular") {
+            topicList.sortedByDescending { it.peopleCount }
+        } else {
+            topicList.filter { it.category == category }
+        }
+
+        if (filteredList.isEmpty()) {
+            Toast.makeText(this, "No topics found for category: $category", Toast.LENGTH_SHORT).show()
+        }
+        topicAdapter.updateList(filteredList)
     }
 }

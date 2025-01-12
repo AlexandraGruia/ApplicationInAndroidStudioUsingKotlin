@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,6 +13,7 @@ class AdviceActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advice)
 
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNavigationView.selectedItemId = R.id.bottom_advice
         bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
@@ -64,6 +66,14 @@ class AdviceActivity : ComponentActivity() {
             }
             false
         }
+
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+
+            startActivity(intent)
+        }
+
     }
+
 
 }

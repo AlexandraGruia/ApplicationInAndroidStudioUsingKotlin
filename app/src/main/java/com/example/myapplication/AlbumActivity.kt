@@ -22,6 +22,7 @@ class AlbumActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album)
 
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNavigationView.selectedItemId = R.id.bottom_album
         bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
@@ -73,6 +74,12 @@ class AlbumActivity: ComponentActivity() {
 
             }
             false
+        }
+
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+
+            startActivity(intent)
         }
 
         val photoGrid = findViewById<GridLayout>(R.id.photoGrid)

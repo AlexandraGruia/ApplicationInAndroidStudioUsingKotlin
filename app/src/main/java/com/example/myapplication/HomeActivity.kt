@@ -83,6 +83,13 @@ class HomeActivity  : ComponentActivity() {
             }
             false
         }
+
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+
+            startActivity(intent)
+        }
     }
 
     private fun displayPost(text: String) {

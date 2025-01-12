@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +16,13 @@ class ForgotPasswordActivity : ComponentActivity() {
 
         val emailInput: EditText = findViewById(R.id.emailInput)
         val doneButton: Button = findViewById(R.id.doneButton)
+
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+
+            startActivity(intent)
+        }
 
         doneButton.setOnClickListener {
             val email = emailInput.text.toString().trim()

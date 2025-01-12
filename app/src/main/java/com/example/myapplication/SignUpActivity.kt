@@ -6,6 +6,7 @@ import android.util.Patterns
 import androidx.activity.ComponentActivity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 
@@ -20,6 +21,13 @@ class SignUpActivity : ComponentActivity() {
         val passwordInput: EditText = findViewById(R.id.passwordInput)
         val dateOfBirthInput: EditText = findViewById(R.id.dateofbirthInput) // Assuming DOB is an additional field
         val signUpButton: Button = findViewById(R.id.signUpButton)
+
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+
+            startActivity(intent)
+        }
 
         signUpButton.setOnClickListener {
             val name = nameInput.text.toString().trim()
@@ -50,6 +58,8 @@ class SignUpActivity : ComponentActivity() {
 
         }
     }
+
+
 
     private fun emailAlreadyUsed(email: String): Boolean {
         val existingEmails = listOf("test@example.com", "user@example.com")

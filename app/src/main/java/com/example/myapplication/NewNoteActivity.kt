@@ -99,6 +99,13 @@ class NewNoteActivity : ComponentActivity() {
             false
         }
 
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+
+            startActivity(intent)
+        }
+
         val photoButton = findViewById<ImageButton>(R.id.photoButton)
         photoButton.setOnClickListener {
             showPhotoOptions()
