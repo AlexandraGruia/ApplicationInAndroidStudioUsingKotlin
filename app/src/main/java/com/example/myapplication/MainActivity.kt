@@ -36,9 +36,8 @@ class MainActivity : ComponentActivity() {
 
         val savedEmail = sharedPreferences.getString("email", null)
         if (savedEmail != null) {
-            // If email is saved, show greeting message and ask for password only
             greetingText.setText("Glad to see you again, $savedEmail")
-            emailInput.setText(savedEmail) // Pre-fill email
+            emailInput.setText(savedEmail)
             passwordInput.requestFocus()
         }
 

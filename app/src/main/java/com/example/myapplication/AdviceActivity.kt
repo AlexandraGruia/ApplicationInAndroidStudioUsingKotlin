@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,19 +13,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AdviceActivity : ComponentActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adviceAdapter: AdviceAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advice)
 
-        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerAdviceView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNavigationView.selectedItemId = R.id.bottom_advice
+        bottomNavigationView.selectedItemId = R.id.bottom_chat
         bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.bottom_advice -> return@setOnItemSelectedListener true
+                R.id.bottom_chat -> return@setOnItemSelectedListener true
                 R.id.bottom_home -> {
                     startActivity(
                         Intent(
@@ -47,17 +47,6 @@ class AdviceActivity : ComponentActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.bottom_chat -> {
-                    startActivity(
-                        Intent(
-                            applicationContext,
-                            ChatActivity::class.java
-                        )
-                    )
-                    finish()
-                    return@setOnItemSelectedListener true
-                }
-
                 R.id.bottom_album -> {
                     startActivity(
                         Intent(
@@ -69,38 +58,52 @@ class AdviceActivity : ComponentActivity() {
                     return@setOnItemSelectedListener true
                 }
 
+                R.id.bottom_advice -> {
+                    startActivity(
+                        Intent(
+                            applicationContext,
+                            AdviceActivity::class.java
+                        )
+                    )
+                    finish()
+                    return@setOnItemSelectedListener true
+                }
+
             }
             false
         }
 
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
         settingsIcon.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
 
             startActivity(intent)
         }
 
-        recyclerView = findViewById(R.id.recyclerViewForum)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        val sharedPrefs = getSharedPreferences("AdviceApp", Context.MODE_PRIVATE)
+        val allEntries = sharedPrefs.all
+        val adviceList = mutableListOf<Advice>()
 
-        val adviceList = listOf(
-            Advice("Tip 1", "Learn Kotlin!","t"),
-            Advice("Tip 2", "Understand Android lifecycle.","t"),
-            Advice("Tip 3", "Use RecyclerView for lists.","t")
-        )
-
-        adviceAdapter = AdviceAdapter(adviceList) { advice ->
-            if (advice.title.isNotEmpty() && advice.fullContent.isNotEmpty()) {
-                val intent = Intent(this, AdviceDetailActivity::class.java).apply {
-                    putExtra("title", advice.title)
-                    putExtra("description", advice.description)
-                    putExtra("fullContent", advice.fullContent)
+        for ((key, value) in allEntries) {
+            if (key.endsWith("_title")) {
+                val adviceId = key.removeSuffix("_title")
+                val title = value.toString()
+                val fullDescription = sharedPrefs.getString("${adviceId}_description", "") ?: ""
+                val shortDescription = if (fullDescription.length > 50) {
+                    "${fullDescription.substring(0, 50)}..."
+                } else {
+                    fullDescription
                 }
-                startActivity(intent)
-            } else {
-                Log.e("AdviceActivity", "Datele sunt invalide: Titlu sau conținut lipsă")
+
+                adviceList.add(Advice(title, shortDescription, fullDescription))
             }
         }
-
-        recyclerView.adapter = adviceAdapter
+        recyclerView.adapter = AdviceAdapter(adviceList) { advice ->
+            val intent = Intent(this, AdviceDetailActivity::class.java)
+            intent.putExtra("title", advice.title)
+            intent.putExtra("description", advice.shortDescription)
+            intent.putExtra("fullContent", advice.fullContent)
+            startActivity(intent)
+        }
     }
 }
