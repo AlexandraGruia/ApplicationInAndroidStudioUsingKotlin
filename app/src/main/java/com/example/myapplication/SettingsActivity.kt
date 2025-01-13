@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -12,6 +13,10 @@ import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsActivity : ComponentActivity() {
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var dbHelper: UserDatabaseHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -52,11 +57,25 @@ class SettingsActivity : ComponentActivity() {
             false
         }
 
+        sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+        dbHelper = UserDatabaseHelper(this)
+
         val nameInput = findViewById<EditText>(R.id.nameInput)
         nameInput.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val username = nameInput.text.toString()
                 Toast.makeText(this, "Username changed to: $username", Toast.LENGTH_SHORT).show()
+
+                val email = sharedPreferences.getString("email", null)
+                email?.let {
+                    val userUpdated = dbHelper.updateUsername(it, username)
+                    if (userUpdated) {
+                        sharedPreferences.edit().putString("username", username).apply() // Actualizează și SharedPreferences
+                        Toast.makeText(this, "Username updated in database.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Failed to update username.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
@@ -64,7 +83,21 @@ class SettingsActivity : ComponentActivity() {
         passwordInput.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val password = passwordInput.text.toString()
-                Toast.makeText(this, "Password updated.", Toast.LENGTH_SHORT).show()
+                if (password.isNotEmpty()) {
+                    Toast.makeText(this, "Password updated.", Toast.LENGTH_SHORT).show()
+
+                    val email = sharedPreferences.getString("email", null)
+                    email?.let {
+                        val userUpdated = dbHelper.updatePassword(it, password)
+                        if (userUpdated) {
+                            Toast.makeText(this, "Password updated in database.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Failed to update password.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "Password cannot be empty.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -72,9 +105,25 @@ class SettingsActivity : ComponentActivity() {
         emailInput.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val email = emailInput.text.toString()
-                Toast.makeText(this, "Email updated to: $email", Toast.LENGTH_SHORT).show()
+                if (email.isNotEmpty()) {
+                    Toast.makeText(this, "Email updated to: $email", Toast.LENGTH_SHORT).show()
+
+                    val currentUsername = sharedPreferences.getString("username", "")
+                    currentUsername?.let {
+                        val userUpdated = dbHelper.updateEmail(it, email)
+                        if (userUpdated) {
+                            sharedPreferences.edit().putString("email", email).apply() // Actualizează și SharedPreferences
+                            Toast.makeText(this, "Email updated in database.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Failed to update email.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "Email cannot be empty.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
+
 
         val notificationsSwitch = findViewById<Switch>(R.id.notificationsSwitch)
         notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -84,6 +133,8 @@ class SettingsActivity : ComponentActivity() {
 
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
+            sharedPreferences.edit().remove("email").apply()
+
             Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@SettingsActivity, MainActivity::class.java)
             startActivity(intent)

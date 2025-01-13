@@ -27,7 +27,7 @@ class SignUpActivity : ComponentActivity() {
         val dateOfBirthInput: EditText = findViewById(R.id.dateofbirthInput)
         val signUpButton: Button = findViewById(R.id.signUpButton)
 
-        // Deschidem un dialog pentru selectarea datei de naștere
+
         dateOfBirthInput.setOnClickListener {
             showDatePickerDialog { selectedDate ->
                 dateOfBirthInput.setText(selectedDate)
@@ -46,42 +46,34 @@ class SignUpActivity : ComponentActivity() {
                 return@setOnClickListener
             }
 
-            // Validăm email-ul
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(this, getString(R.string.error_invalid_email), Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
 
-            // Verificăm dacă email-ul este deja folosit
-            val cursor = dbHelper.getUserByEmail(email)
-            cursor?.let {
-                if (it.count > 0) {
-                    Toast.makeText(
-                        this,
-                        getString(R.string.error_email_already_used),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    it.close()
-                    return@setOnClickListener
-                }
-                it.close()
+            val existingUser = dbHelper.getUserByEmail(email)
+            if (existingUser != null) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.error_email_already_used),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
 
-            // Validăm parola
+
             if (!isValidPassword(password)) {
                 Toast.makeText(this, getString(R.string.error_invalid_password), Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
 
-            // Adăugăm utilizatorul în baza de date
             dbHelper.addUser(name, email, password)
 
             Toast.makeText(this, getString(R.string.success_account_created), Toast.LENGTH_SHORT)
                 .show()
 
-            // Navigăm înapoi la pagina de login (MainActivity)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -106,8 +98,7 @@ class SignUpActivity : ComponentActivity() {
     }
 
     private fun isValidPassword(password: String): Boolean {
-        val passwordPattern =
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=!])(?=\\S+\$).{8,}\$"
-        return Pattern.compile(passwordPattern).matcher(password).matches()
-    }
+            val passwordPattern = "^.{6,}\$"
+            return Pattern.compile(passwordPattern).matcher(password).matches()
+        }
 }

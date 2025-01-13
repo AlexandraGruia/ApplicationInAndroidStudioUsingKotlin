@@ -11,31 +11,34 @@
         android:id="@+id/greetingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Glad to see you again, \n~name~"
+        android:layout_marginTop="312dp"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="Glad to see you again"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp"
-        android:textAlignment="center"
-        android:fontFamily="cursive"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="250dp"
-        android:visibility="gone"
-        android:gravity="center"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/emailInput"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="292dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_edittext"
         android:gravity="center"
         android:hint="Email"
         android:imeOptions="actionNext"
         android:inputType="text"
         android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/greetingText" />
 
@@ -45,6 +48,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:hint="Password"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         android:inputType="textPassword"
         android:background="@drawable/rounded_edittext"
         android:padding="10dp"
@@ -53,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/emailInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <LinearLayout
         android:layout_width="wrap_content"

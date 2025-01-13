@@ -3,7 +3,9 @@ package com.example.myapplication
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
@@ -35,57 +37,62 @@ class MainActivity : ComponentActivity() {
 
 
         val savedEmail = sharedPreferences.getString("email", null)
+        Log.d("MainActivity", "Saved email: $savedEmail")
         if (savedEmail != null) {
-            greetingText.setText("Glad to see you again, $savedEmail")
-            emailInput.setText(savedEmail)
+            val user = dbHelper.getUserByEmail(savedEmail)
+            val username = user?.get("name") ?: "Unknown"
+
+            Log.d("MainActivity", "Username: $username")
+
+            greetingText.text = "Glad to see you again, \n $username"
+            greetingText.visibility = View.VISIBLE
+            emailInput.visibility = View.INVISIBLE
             passwordInput.requestFocus()
+
+        } else {
+            greetingText.text = "Please log in."
+            greetingText.visibility = View.INVISIBLE
+            emailInput.visibility = View.VISIBLE
         }
 
         passwordInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
-                val email = emailInput.text.toString().trim()
+                val email = savedEmail ?: emailInput.text.toString().trim()
                 val password = passwordInput.text.toString().trim()
 
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(this, "Please enter both email and password.", Toast.LENGTH_SHORT).show()
+                if (password.isEmpty()) {
+                    Toast.makeText(this, "Please enter your password.", Toast.LENGTH_SHORT).show()
                     return@setOnEditorActionListener true
-                }else if(password.isNotEmpty() && email.isNotEmpty()){
-                    val intent = Intent(this, CinematicActivity::class.java)
-                    startActivity(intent)
-                    finish()
                 }
 
-                val cursor = dbHelper.readableDatabase.rawQuery(
-                    "SELECT * FROM users WHERE email = ?",
-                    arrayOf(email)
-                )
+                val user = dbHelper.getUserByEmail(email)
+                if (user != null) {
+                    val isAuthenticated = dbHelper.authenticateUser(email, password)
 
-                if (cursor.moveToFirst()) {
-                    val username = cursor.getString(cursor.getColumnIndexOrThrow("username"))
-                    val storedPassword = cursor.getString(cursor.getColumnIndexOrThrow("password"))
+                    if (isAuthenticated) {
+                        sharedPreferences.edit().putString("email", email).apply()
 
-                    if (storedPassword == dbHelper.hashPassword(password)) {
-                        sharedPreferences.edit().putString("username", username).apply()
-
-                        greetingText.text = "Glad to see you again, \n$username"
-                        greetingText.visibility = TextView.VISIBLE
+                        val username = user["name"] ?: "Unknown"
+                        greetingText.text = "Glad to see you again, $username"
 
                         val intent = Intent(this, CinematicActivity::class.java)
                         intent.putExtra("username", username)
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(this, "Incorrect email or password. Please try again.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this, "Email not found. Please sign up first.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Email not found. Please try again.", Toast.LENGTH_SHORT).show()
                 }
-                cursor.close()
+
                 true
             } else {
                 false
             }
         }
+
+
 
         forgotPassword.setOnClickListener {
             val intent = Intent(this, ForgotPasswordActivity::class.java)

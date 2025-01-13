@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import java.security.MessageDigest
 
 class UserDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -57,10 +58,27 @@ class UserDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
 
-    fun getUserByEmail(email: String): Cursor? {
+
+    fun getUserByEmail(email: String): Map<String, String>? {
         val db = readableDatabase
-        return db.rawQuery("SELECT * FROM $TABLE_USERS WHERE $COLUMN_EMAIL = ?", arrayOf(email))
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_USERS WHERE $COLUMN_EMAIL = ?", arrayOf(email))
+        var user: Map<String, String>? = null
+        if (cursor.moveToFirst()) {
+            user = mapOf(
+                "id" to cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)).toString(),
+                "name" to cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                "email" to cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL)),
+                "password" to cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD))
+            )
+            Log.d("getUserByEmail", "User found: $user")  // Log pentru verificare
+        } else {
+            Log.d("getUserByEmail", "No user found with email: $email")
+        }
+
+        cursor.close()
+        return user
     }
+
 
 
     fun hashPassword(password: String): String {
@@ -72,6 +90,50 @@ class UserDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             e.printStackTrace()
             ""
         }
+    }
+
+    fun authenticateUser(email: String, password: String): Boolean {
+        val db = readableDatabase
+        val hashedPassword = hashPassword(password)
+        val cursor = db.rawQuery(
+            "SELECT 1 FROM $TABLE_USERS WHERE $COLUMN_EMAIL = ? AND $COLUMN_PASSWORD = ?",
+            arrayOf(email, hashedPassword)
+        )
+        val isAuthenticated = cursor.moveToFirst()
+        cursor.close()
+        return isAuthenticated
+    }
+
+
+    fun updateUsername(email: String, newUsername: String): Boolean {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_NAME, newUsername)
+        }
+        val rowsAffected = db.update(TABLE_USERS, values, "$COLUMN_EMAIL = ?", arrayOf(email))
+        db.close()
+        return rowsAffected > 0
+    }
+
+    fun updateEmail(oldEmail: String, newEmail: String): Boolean {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_EMAIL, newEmail)
+        }
+        val rowsAffected = db.update(TABLE_USERS, values, "$COLUMN_EMAIL = ?", arrayOf(oldEmail))
+        db.close()
+        return rowsAffected > 0
+    }
+
+    fun updatePassword(email: String, newPassword: String): Boolean {
+        val db = writableDatabase
+        val hashedPassword = hashPassword(newPassword)
+        val values = ContentValues().apply {
+            put(COLUMN_PASSWORD, hashedPassword)
+        }
+        val rowsAffected = db.update(TABLE_USERS, values, "$COLUMN_EMAIL = ?", arrayOf(email))
+        db.close()
+        return rowsAffected > 0
     }
 
 }
