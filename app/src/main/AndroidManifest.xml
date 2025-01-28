@@ -86,13 +86,11 @@
         <activity android:name=".NewNoteActivity"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:exported="true">
-            <!-- You can define an Intent filter if needed -->
         </activity>
 
         <activity android:name=".ChatActivity"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:exported="true">
-            <!-- You can define an Intent filter if needed -->
         </activity>
 
         <activity android:name=".AdviceActivity"

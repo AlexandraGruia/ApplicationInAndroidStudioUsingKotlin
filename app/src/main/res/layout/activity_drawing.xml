@@ -6,74 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".DrawingActivity">
 
-    <com.example.myapplication.DrawingView
-        android:id="@+id/drawingView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintWidth_percent="1"
-        app:layout_constraintHeight_percent="0.8"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="16dp" />
+
+        <com.example.myapplication.DrawingView
+            android:id="@+id/drawingView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="1" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="396dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/drawingView"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/drawingView">
 
-    <Button
-        android:id="@+id/clearButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:textColor="#ffffff"
-        android:layout_margin="16dp"
-        android:textSize="12sp"
-        android:background="@drawable/rounded_button"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/colorButton" />
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="Clear"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/colorButton" />
 
-    <Button
-        android:id="@+id/colorButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/clearButton"
-        android:textColor="#ffffff"
-        android:layout_margin="16dp"
-        android:textSize="12sp"
-        android:background="@drawable/rounded_button"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        <Button
+            android:id="@+id/colorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="Change Color"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/clearButton" />
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/clearButton"
-            android:textColor="#ffffff"
             android:layout_margin="16dp"
-            android:textSize="12sp"
             android:background="@drawable/rounded_button"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
-</LinearLayout>
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="Save"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/clearButton" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

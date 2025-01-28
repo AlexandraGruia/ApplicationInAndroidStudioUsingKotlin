@@ -76,15 +76,12 @@ class AdviceDetailActivity : ComponentActivity() {
             startActivity(intent)
         }
 
-        // Obținerea datelor din Intent
         val title = intent.getStringExtra("title") ?: "No Title"
         val fullContent = intent.getStringExtra("fullContent") ?: "No content available."
 
-        // Asocierea cu elementele din layout
         val adviceTitleTextView: TextView = findViewById(R.id.adviceDetailTitle)
         val adviceDescriptionTextView: TextView = findViewById(R.id.adviceDetailDescription)
 
-        // Setarea textului
         adviceTitleTextView.text = title
         adviceDescriptionTextView.text = fullContent
     }

@@ -91,6 +91,8 @@
         android:background="@drawable/rounded_input"
         android:gravity="top|start"
         android:hint="Start writing..."
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         android:inputType="textMultiLine"
         android:minHeight="150dp"
         android:padding="10dp"

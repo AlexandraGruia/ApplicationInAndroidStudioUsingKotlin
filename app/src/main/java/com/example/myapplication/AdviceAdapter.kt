@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 data class Advice(val title: String, val shortDescription: String,  val fullContent: String)
 
 class AdviceAdapter(
-    private val adviceList: List<Advice>,
+    private var adviceList: List<Advice>,
     private val onItemClicked: (Advice) -> Unit
 ) : RecyclerView.Adapter<AdviceAdapter.AdviceViewHolder>() {
 
@@ -27,11 +27,17 @@ class AdviceAdapter(
 
     override fun getItemCount() = adviceList.size
 
+    fun updateAdviceList(newAdviceList: List<Advice>) {
+        adviceList = newAdviceList
+        notifyDataSetChanged()
+    }
+
     class AdviceViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val title = view.findViewById<TextView>(R.id.adviceTitle)
         val shortDescription = view.findViewById<TextView>(R.id.adviceShortDescription)
     }
 }
+
 
 
 
