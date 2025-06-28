@@ -1,8 +1,6 @@
 Descriere:
 Aceasta este o aplicație Android dezvoltata in Kotlin și integrată cu Firebase Firestore pentru stocarea datelor și Cloudinary pentru stocarea imaginilor. Aplicația oferă funcționalități de jurnal, management foto, desen digital, text-to-speech, comunitate și multe altele.
 
-GIT URL: https://github.com/AlexandraGruia/ApplicationInAndroidStudioUsingKotlin
-
 Cerințe preliminare:
 - Android Studio (recomandat: Arctic Fox sau mai nou)
 - JDK 11 sau superior
