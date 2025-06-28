@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "669153848645",
+    "project_id": "dreamlog-65b9c",
+    "storage_bucket": "dreamlog-65b9c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669153848645:android:3a75889a2e80642681e22c",
+        "android_client_info": {
+          "package_name": "com.example.DreamLog"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2z5yPNLgFypa12e7-OZWkPECTycP8QHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669153848645:android:2e2ed08add86ac1181e22c",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2z5yPNLgFypa12e7-OZWkPECTycP8QHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

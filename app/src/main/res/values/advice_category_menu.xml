@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="categoryAdvice_list">
+    <item>Anxiety</item>
+    <item>Lifestyle</item>
+    <item>Others</item>
+</string-array>
+</resources>

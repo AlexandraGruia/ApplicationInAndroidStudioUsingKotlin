@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/icon_home"
+        android:elevation="@android:dimen/app_icon_size"
+        android:title="Home"
+
+        />
+
+    <item
+        android:id="@+id/bottom_album"
+        android:icon="@drawable/baseline_apps_24"
+        android:title="Album"
+         />
+    <item
+        android:id="@+id/bottom_newnote"
+        android:icon="@drawable/plus_ic"
+        android:title="New Note"
+         />
+
+    <item
+        android:id="@+id/bottom_chat"
+        android:icon="@drawable/chat_ic"
+        android:title="Chat"
+        />
+
+
+    <item
+        android:id="@+id/bottom_advice"
+        android:icon="@drawable/book_ic"
+        android:title="Advice"
+        />
+</menu>

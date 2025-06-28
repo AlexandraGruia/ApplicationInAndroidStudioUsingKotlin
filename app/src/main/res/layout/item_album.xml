@@ -1,0 +1,84 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/item_background_rounded"
+    android:elevation="6dp"
+    android:layout_margin="10dp"
+    android:clipToPadding="false"
+    android:foreground="?attr/selectableItemBackground">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:clipChildren="true"
+        android:clipToPadding="false"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/albumImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_rounded_corners"
+            android:contentDescription="Album image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/album_photo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/overlay_gradient"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="4dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/albumName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Album Name"
+                android:textSize="18sp"
+                android:textColor="#1E1E1E"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/albumCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 Items"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/deleteAlbumButton"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/ic_delete"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</LinearLayout>

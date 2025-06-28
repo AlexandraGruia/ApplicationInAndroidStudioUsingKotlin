@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundall"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp">
+
+        <Space
+            android:layout_width="43dp"
+            android:layout_height="89dp"
+            android:layout_weight="0" />
+
+        <TextView
+            android:id="@+id/counterText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Sudoku-uri completate: 0"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp" />
+
+        <FrameLayout
+            android:id="@+id/sudokuContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="#f5a3a3"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/autoCompleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completare Automată"
+            android:visibility="gone"
+            android:background="#ff99cc"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+</ScrollView>

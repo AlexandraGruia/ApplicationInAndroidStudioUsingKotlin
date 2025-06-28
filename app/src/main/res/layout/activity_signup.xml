@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundaal"
+    tools:context=".SignUpActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="TouchTargetSize">
+
+    <TextView
+        android:id="@+id/nametext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Hello, \n your name is"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/nametext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:gravity="center"
+            android:hint="name"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textSize="14dp"
+            tools:ignore="TextSizeCheck" />
+
+        <TextView
+            android:id="@+id/passwordtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="220dp"
+            android:text="Password"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/passwordtext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:hint="password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textSize="14dp"
+            tools:ignore="TextSizeCheck" />
+
+        <TextView
+            android:id="@+id/emailtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="320dp"
+            android:text="Email \n(in case you forgot your password)"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/emailInput"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/emailtext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:hint="email"
+            android:imeOptions="actionDone"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textSize="14dp"
+            tools:ignore="TextSizeCheck" />
+
+        <TextView
+            android:id="@+id/dateofbirthtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="440dp"
+            android:text="Date of birth"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/dateofbirthInput"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/dateofbirthtext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:gravity="center"
+            android:hint="DD/MM/YYYY"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:textSize="14dp"
+            android:padding="10dp"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+            tools:ignore="TextSizeCheck" />
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/dateofbirthInput"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_edittext"
+            android:backgroundTint="#F2F2F2"
+            android:fontFamily="sans-serif-medium"
+            android:text="Sign Up"
+            android:textColor="#000000" />
+
+</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

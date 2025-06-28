@@ -1,0 +1,220 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundal"
+    tools:context=".ChatActivity"
+    tools:ignore="TouchTargetSize">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="TouchTargetSize">
+
+        <ImageView
+            android:id="@+id/settingsIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="16dp"
+            android:contentDescription="Settings Icon"
+            android:src="@drawable/icon_setting"
+            tools:ignore="TouchTargetSize" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:text="Discussions"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSize" />
+
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="No topics available in this category"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:layout_below="@id/titleTextView"/>
+
+        <ImageView
+            android:id="@+id/menuIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:contentDescription="Menu Icon"
+            android:src="@drawable/ic_menu"
+            app:tint="@color/black"
+            tools:ignore="TouchTargetSize" />
+
+        <LinearLayout
+            android:id="@+id/categoriesMenu"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menuIcon"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_corner_background"
+            android:visibility="gone"
+            android:elevation="8dp"
+            tools:ignore="TouchTargetSize">
+
+            <TextView
+                android:id="@+id/categoryC1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="C1"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/highlight_category_background" />
+
+            <TextView
+                android:id="@+id/categoryC2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="C2"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/highlight_category_background" />
+
+            <TextView
+                android:id="@+id/categoryC3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="C3"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/highlight_category_background" />
+
+            <TextView
+                android:id="@+id/categoryC4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="C4"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/highlight_category_background" />
+
+            <TextView
+                android:id="@+id/mostRecent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Most Recent"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/highlight_category_background" />
+
+            <TextView
+                android:id="@+id/mostPopular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Most Popular"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/highlight_category_background" />
+
+            <TextView
+                android:id="@+id/categoryFavorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Favorite"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/highlight_category_background" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="16dp"
+            android:layout_above="@id/startNewTopicLayout"
+            android:layout_below="@id/titleTextView"
+            tools:listitem="@layout/item_topic"
+            tools:ignore="TouchTargetSize" />
+
+        <RelativeLayout
+            android:id="@+id/startNewTopicLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="54dp"
+            android:background="@drawable/background_bottomm"
+            android:padding="8dp"
+            tools:ignore="TouchTargetSize">
+
+            <TextView
+                android:id="@+id/startNewTopicText"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="93dp"
+                android:text="Want to start a new topic?"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:ignore="TouchTargetSize" />
+
+            <ImageButton
+                android:id="@+id/fab_create_topic"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:background="?attr/selectableItemBackground"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:contentDescription="Create new topic"
+                android:src="@drawable/ic_add"
+                app:maxImageSize="24dp"
+                tools:ignore="TouchTargetSize" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/bottom_background"
+            android:elevation="15dp"
+            android:paddingLeft="10dp"
+            app:itemIconSize="30dp"
+            app:itemIconTint="@drawable/item_selector"
+            app:itemRippleColor="@android:color/transparent"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/buttonnavmenu" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

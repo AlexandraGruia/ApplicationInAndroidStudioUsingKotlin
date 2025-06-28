@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Dream Log"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        android:hardwareAccelerated="true"
+        tools:targetApi="31">
+
+        <activity android:name="com.example.myapplication.MainActivity" android:exported="true" android:theme="@style/Theme.MyApplication" android:windowSoftInputMode="stateVisible|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.myapplication.ui.settings.SettingsActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.games.sudoku.SudokuActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.games.sudoku.SudokuPlay" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.games.GamesActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.games.sudoku.SudokuCongratulationsActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ForgotPasswordActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ForgotPasswordMessage" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.LoginActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.PostDetailActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.SignUpActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.utils.CinematicActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.utils.DrawingActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.AlbumActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.HomeActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.NewNoteActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ChatActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.AdviceActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.CreateTopicActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.TopicActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.AddAdviceActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.EditAdviceActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.games.colormatch.ColorMatchActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.NoteDetailActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.ui.utils.StatisticsActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name="com.example.myapplication.AdviceDetailActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+        <activity android:name=".AlbumDetailActivity" android:windowSoftInputMode="stateVisible|adjustResize" android:exported="true">
+        </activity>
+
+    </application>
+</manifest>
