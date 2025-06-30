@@ -47,8 +47,9 @@ class PostDatabaseHelper private constructor() {
             date = date,
             imagePath = imageUrl,
             albumId = albumId,
-            userId = userId
+            userId = userId.trim().lowercase()
         )
+
 
         return try {
             postsCollection.document(id).set(post).await()

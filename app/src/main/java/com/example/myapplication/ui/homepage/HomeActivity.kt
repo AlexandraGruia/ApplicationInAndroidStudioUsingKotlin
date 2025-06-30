@@ -113,7 +113,7 @@ class HomeActivity : ComponentActivity() {
 
                 val openNoteDetail = View.OnClickListener {
                     val intent = Intent(this, NoteDetailActivity::class.java)
-                    intent.putExtra("post_id", post.id)
+                    intent.putExtra("postId", post.id)
                     startActivity(intent)
                 }
 

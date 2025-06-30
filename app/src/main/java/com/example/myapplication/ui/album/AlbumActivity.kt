@@ -1,12 +1,16 @@
 package com.example.myapplication
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Base64
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +28,7 @@ import com.example.myapplication.ui.models.Post
 import com.example.myapplication.ui.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import java.io.File
 
 class AlbumActivity : ComponentActivity() {
 
@@ -40,13 +45,9 @@ class AlbumActivity : ComponentActivity() {
         userId = getSharedPreferences("user_data", MODE_PRIVATE).getString("email", "") ?: ""
         lifecycleScope.launch {
             val user = UserDatabaseHelper.instance.getUserByEmail(userId)
-            if (user == null) {
-                finish()
-            } else {
-                if (user.isAdmin) {
-                }
-            }
+            if (user == null) finish()
         }
+
         photoGrid = findViewById(R.id.photoGrid)
         albumRecyclerView = findViewById(R.id.albumRecyclerView)
         switchModeButton = findViewById(R.id.switchModeButton)
@@ -103,9 +104,7 @@ class AlbumActivity : ComponentActivity() {
         switchModeButton.setImageResource(R.drawable.ic_switch)
         photoGrid.visibility = View.GONE
         albumRecyclerView.visibility = View.VISIBLE
-        lifecycleScope.launch {
-            loadAlbums()
-        }
+        lifecycleScope.launch { loadAlbums() }
     }
 
     private fun showCreateAlbumDialog() {
@@ -120,9 +119,7 @@ class AlbumActivity : ComponentActivity() {
             .setPositiveButton("Create") { dialog, _ ->
                 val name = input.text.toString().trim()
                 if (name.isNotEmpty()) {
-                    lifecycleScope.launch {
-                        createAlbum(name)
-                    }
+                    lifecycleScope.launch { createAlbum(name) }
                 } else {
                     toast("Album name cannot be empty")
                 }
@@ -134,14 +131,11 @@ class AlbumActivity : ComponentActivity() {
 
     private suspend fun createAlbum(name: String) {
         val db = AlbumDatabaseHelper.instance
-
         val albums = db.getAlbums(userId)
         if (albums.any { it.name.equals(name, ignoreCase = true) }) {
             toast("Album '$name' already exists")
             return
         }
-
-        // Creează albumul nou
         val newAlbum = db.addAlbum(name, userId)
         if (newAlbum != null) {
             toast("Album '$name' created successfully")
@@ -154,34 +148,30 @@ class AlbumActivity : ComponentActivity() {
     private suspend fun loadAlbums() {
         val db = AlbumDatabaseHelper.instance
         val postDb = PostDatabaseHelper.instance
-
         val albums = db.getAlbums(userId)
         val allPosts = postDb.getAllPosts()
 
         val albumsWithPhotos = albums.map { album ->
             val postsInAlbum = allPosts.filter { it.albumId == album.id }
-            val photoUrls = postsInAlbum.map { it.imagePath }.toMutableList()
-            Album(album.id, album.name, photoUrls)
+            val photoUrls = postsInAlbum.mapNotNull { it.imagePath }
+            Album(album.id, album.name, photoUrls.toMutableList())
         }
 
         albumRecyclerView.layoutManager = GridLayoutManager(this, 2)
         albumRecyclerView.adapter = AlbumAdapter(this, albumsWithPhotos) { album ->
             val sharedPref = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
             val currentUserEmail = sharedPref.getString("userEmail", "") ?: ""
-
-            val intent = Intent(this, AlbumDetailActivity::class.java).apply {
+            startActivity(Intent(this, AlbumDetailActivity::class.java).apply {
                 putExtra("albumId", album.id)
                 putExtra("albumName", album.name)
                 putExtra("userEmail", currentUserEmail)
-            }
-            startActivity(intent)
+            })
         }
     }
 
-
     private fun loadPostsGrid() {
         lifecycleScope.launch {
-            val posts = PostDatabaseHelper.instance.getPostsForUser(userId)
+            val posts = PostDatabaseHelper.instance.getAllPosts().filter { it.userId.equals(userId, ignoreCase = true) }
             runOnUiThread {
                 photoGrid.removeAllViews()
                 photoGrid.columnCount = 3
@@ -211,13 +201,11 @@ class AlbumActivity : ComponentActivity() {
                             setMargins(margin, margin, margin, margin)
                         }
                         setOnClickListener {
-                            startActivity(Intent(this@AlbumActivity, PostDetailActivity::class.java).apply {
-                                putExtra("postId", post.id)
-                                putExtra("filePath", post.imagePath)
-                                putExtra("date", post.date)
-                                putExtra("text", post.text)
-                            })
+                            val intent = Intent(this@AlbumActivity, NoteDetailActivity::class.java)
+                            intent.putExtra("postId", post.id)
+                            startActivity(intent)
                         }
+
                     }
 
                     val imageView = ImageView(this@AlbumActivity).apply {
@@ -229,20 +217,30 @@ class AlbumActivity : ComponentActivity() {
                     }
 
                     if (!post.imagePath.isNullOrEmpty()) {
-                        if (post.imagePath.startsWith("http")) {
-                            Glide.with(this@AlbumActivity)
-                                .load(post.imagePath)
-                                .placeholder(R.drawable.default_image)
-                                .centerCrop()
-                                .into(imageView)
-                        } else {
-                            try {
-                                val decodedBytes = android.util.Base64.decode(post.imagePath, android.util.Base64.DEFAULT)
-                                val bitmap = android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-                                imageView.setImageBitmap(bitmap)
-                            } catch (e: Exception) {
-                                imageView.setImageResource(R.drawable.default_image)
-                                android.util.Log.e("AlbumActivity", "Failed to decode Base64 image: ${e.message}")
+                        when {
+                            post.imagePath.startsWith("http") -> {
+                                Glide.with(this@AlbumActivity)
+                                    .load(post.imagePath)
+                                    .placeholder(R.drawable.default_image)
+                                    .centerCrop()
+                                    .into(imageView)
+                            }
+                            File(post.imagePath).exists() -> {
+                                Glide.with(this@AlbumActivity)
+                                    .load(File(post.imagePath))
+                                    .placeholder(R.drawable.default_image)
+                                    .centerCrop()
+                                    .into(imageView)
+                            }
+                            else -> {
+                                try {
+                                    val decodedBytes = Base64.decode(post.imagePath, Base64.DEFAULT)
+                                    val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+                                    imageView.setImageBitmap(bitmap)
+                                } catch (e: Exception) {
+                                    imageView.setImageResource(R.drawable.default_image)
+                                    Log.e("AlbumActivity", "Failed to decode Base64 image: ${e.message}")
+                                }
                             }
                         }
                     } else {
@@ -302,5 +300,7 @@ class AlbumActivity : ComponentActivity() {
             }
         }
     }
+
+
 
 }
