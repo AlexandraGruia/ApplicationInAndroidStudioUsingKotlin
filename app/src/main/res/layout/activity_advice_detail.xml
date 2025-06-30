@@ -35,7 +35,7 @@
 
             <TextView
                 android:id="@+id/adviceDetailTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Advice Title"
                 android:textSize="28sp"
@@ -43,11 +43,14 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
+                android:paddingEnd="5dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toStartOf="@id/favoriteButton" />
+
+
 
             <ImageButton
                 android:id="@+id/favoriteButton"
