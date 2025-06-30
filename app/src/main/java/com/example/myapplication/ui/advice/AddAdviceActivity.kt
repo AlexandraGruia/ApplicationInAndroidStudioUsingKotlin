@@ -39,6 +39,8 @@ class AddAdviceActivity : ComponentActivity() {
         val saveButton = findViewById<Button>(R.id.submitAdviceButton)
         val categorySpinner = findViewById<Spinner>(R.id.categorySpinner)
 
+
+
         val categories = listOf("Anxiety", "Lifestyle", "Others")
         val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
